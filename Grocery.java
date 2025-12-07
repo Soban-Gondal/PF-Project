@@ -147,4 +147,90 @@ public class Grocery {
         } while (choice != 8);
     }
 
+    // ------------------------------------------------------
+    // CASHIER LOGIN
+    // ------------------------------------------------------
+    static void cashierLogin() {
+
+        System.out.println("\n===== CASHIER LOGIN =====");
+        System.out.println("1. Login");
+        System.out.println("2. Change Password");
+
+        int choice = safeInt();
+
+        switch (choice) {
+
+            case 1 -> {
+                System.out.print("Enter Cashier Username: ");
+                String user = sc.next();
+
+                System.out.print("Enter 4-digit PIN: ");
+                int pass = safeInt();
+
+                if (user.equals(CASHIER_USER) && pass == CASHIER_PASS) {
+                    sc.nextLine();
+                    cashierMenu();
+                } else {
+                    System.out.println("Invalid cashier details!");
+                }
+            }
+
+            case 2 -> {
+                System.out.println("\n===== CHANGE CASHIER PASSWORD =====");
+                System.out.print("Enter current PIN: ");
+                int oldPin = safeInt();
+
+                if (oldPin == CASHIER_PASS) {
+
+                    System.out.print("Enter new PIN: ");
+                    int newPin = safeInt();
+
+                    System.out.print("Confirm new PIN: ");
+                    int confirmPin = safeInt();
+
+                    if (newPin == confirmPin) {
+                        CASHIER_PASS = newPin;
+                        System.out.println("Password changed successfully!");
+                    } else {
+                        System.out.println("PINs do not match!");
+                    }
+
+                } else {
+                    System.out.println("Incorrect current PIN!");
+                }
+            }
+
+            default -> System.out.println("Invalid choice!");
+        }
+    }
+
+    // ------------------------------------------------------
+    // CASHIER MENU
+    // ------------------------------------------------------
+    static void cashierMenu() {
+
+        int choice;
+
+        do {
+            System.out.println("\n===== CASHIER MENU =====");
+            System.out.println("1. Generate Bill");
+            System.out.println("2. View Product List");
+            System.out.println("3. Search Product");
+            System.out.println("4. Back");
+            System.out.print("Choose option: ");
+
+            choice = safeInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1 -> generateBill();
+                case 2 -> viewProducts();
+                case 3 -> searchProduct();
+                case 4 -> System.out.println("Returning...");
+                default -> System.out.println("Invalid choice.");
+            }
+
+        } while (choice != 4);
+    }
+
 
