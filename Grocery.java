@@ -232,5 +232,108 @@ public class Grocery {
 
         } while (choice != 4);
     }
+    // ------------------------------------------------------
+    // ADD PRODUCT
+    // ------------------------------------------------------
+    static void addProduct() {
+        Product p = new Product();
+
+        System.out.print("Enter Product ID: ");
+        p.id = getUniqueProductId();
+
+        System.out.print("Enter Product Name: ");
+        p.name = sc.nextLine();
+
+        System.out.print("Enter Price: ");
+        p.price = safeDouble();
+
+        System.out.print("Enter Quantity: ");
+        p.quantity = safeInt();
+
+        System.out.print("Enter Category: ");
+        p.category = sc.nextLine();
+
+        products[productCount++] = p;
+        System.out.println("Product added successfully.");
+    }
+
+    // ------------------------------------------------------
+    static void viewProducts() {
+        System.out.println("\n===== PRODUCT LIST =====");
+        System.out.println("ID | Name | Price | Qty | Category");
+
+        for (int i = 0; i < productCount; i++) {
+            Product p = products[i];
+            System.out.println(p.id + " | " + p.name + " | Rs." + p.price + " | " + p.quantity + " | " + p.category);
+        }
+    }
+
+    // ------------------------------------------------------
+    static void updateProduct() {
+        System.out.print("Enter Product ID to update: ");
+        int id = safeInt();
+        sc.nextLine();
+
+        int idx = findProductIndex(id);
+
+        if (idx == -1) {
+            System.out.println("Product not found.");
+            return;
+        }
+
+        Product p = products[idx];
+
+        System.out.print("New Name: ");
+        p.name = sc.nextLine();
+
+        System.out.print("New Price: ");
+        p.price = safeDouble();
+
+        System.out.print("New Quantity: ");
+        p.quantity = safeInt();
+
+        System.out.print("New Category: ");
+        p.category = sc.nextLine();
+
+        System.out.println("Product updated successfully.");
+    }
+
+    // ------------------------------------------------------
+    static void deleteProduct() {
+        System.out.print("Enter Product ID to delete: ");
+        int id = safeInt();
+
+        int idx = findProductIndex(id);
+
+        if (idx == -1) {
+            System.out.println("Product not found.");
+            return;
+        }
+
+        for (int i = idx; i < productCount - 1; i++)
+            products[i] = products[i + 1];
+
+        productCount--;
+
+        System.out.println("Product deleted.");
+    }
+
+    // ------------------------------------------------------
+    // SEARCH PRODUCT
+    // ------------------------------------------------------
+    static void searchProduct() {
+        System.out.print("Enter product name or ID: ");
+        String input = sc.nextLine().toLowerCase();
+
+        for (int i = 0; i < productCount; i++) {
+            Product p = products[i];
+            if (String.valueOf(p.id).equals(input) || p.name.toLowerCase().contains(input)) {
+                System.out.println(p.id + " | " + p.name + " | Rs." + p.price + " | Qty: " + p.quantity);
+                return;
+            }
+        }
+        System.out.println("Product not found.");
+    }
+
 
 
