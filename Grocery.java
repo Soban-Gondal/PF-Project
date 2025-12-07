@@ -338,71 +338,72 @@ public class Grocery {
     // ------------------------------------------------------
     // BILL GENERATION WITH FILE HANDLING
     // ------------------------------------------------------
-    static void generateBill() {
+static void generateBill() {
 
-        String billId = "BILL" + System.currentTimeMillis();
-        double total = 0;
+    String billId = "BILL" + System.currentTimeMillis();
+    double total = 0;
 
-        StringBuilder billContent = new StringBuilder();
-        billContent.append("===== GROCERY BILL =====\n");
-        billContent.append("Bill ID: ").append(billId).append("\n");
-        billContent.append("Date: ").append(new Date()).append("\n\n");
-        billContent.append("Item | Qty | Unit Price | Total\n");
+    // Using simple String instead of StringBuilder
+    String billContent = "";
+    
+    billContent += "===== GROCERY BILL =====\n";
+    billContent += "Bill ID: " + billId + "\n";
+    billContent += "Date: " + new Date() + "\n\n";
+    billContent += "Item | Qty | Unit Price | Total\n";
 
-        while (true) {
-            System.out.print("Enter Product ID (0 to finish): ");
-            int id = safeInt();
+    while (true) {
+        System.out.print("Enter Product ID (0 to finish): ");
+        int id = safeInt();
 
-            if (id == 0) break;
+        if (id == 0) break;
 
-            int idx = findProductIndex(id);
-            if (idx == -1) {
-                System.out.println("Product not found.");
-                continue;
-            }
-
-            Product p = products[idx];
-
-            System.out.print("Enter Quantity: ");
-            int qty = safeInt();
-
-            if (qty > p.quantity) {
-                System.out.println("Not enough stock!");
-                continue;
-            }
-
-            double cost = qty * p.price;
-            total += cost;
-            p.quantity -= qty;
-
-            billContent.append(p.name).append(" | ").append(qty).append(" | ")
-                    .append(p.price).append(" | ").append(cost).append("\n");
-
-            System.out.println(qty + " x " + p.name + " = Rs." + cost);
+        int idx = findProductIndex(id);
+        if (idx == -1) {
+            System.out.println("Product not found.");
+            continue;
         }
 
-        // TAX 5%
-        double tax = total * 0.05;
-        total += tax;
+        Product p = products[idx];
 
-        billContent.append("\nTax (5%): ").append(tax).append("\n");
-        billContent.append("Total Amount: Rs. ").append(total).append("\n");
+        System.out.print("Enter Quantity: ");
+        int qty = safeInt();
 
-        // Save bill to file
-        saveBillToFile(billId, billContent.toString());
+        if (qty > p.quantity) {
+            System.out.println("Not enough stock!");
+            continue;
+        }
 
-        // Save record in memory + file
-        SaleRecord sr = new SaleRecord();
-        sr.billId = billId;
-        sr.total = total;
-        sr.date = new Date().toString();
-        sales.add(sr);
+        double cost = qty * p.price;
+        total += cost;
+        p.quantity -= qty;
 
-        saveSales();
+        billContent += p.name + " | " + qty + " | " + p.price + " | " + cost + "\n";
 
-        System.out.println("\nBill Generated Successfully!");
-        System.out.println("Saved as: " + billId + ".txt");
+        System.out.println(qty + " x " + p.name + " = Rs." + cost);
     }
+
+    // TAX 5%
+    double tax = total * 0.05;
+    total += tax;
+
+    billContent += "\nTax (5%): " + tax + "\n";
+    billContent += "Total Amount: Rs. " + total + "\n";
+
+    // Save bill to file
+    saveBillToFile(billId, billContent);
+
+    // Save sale record
+    SaleRecord sr = new SaleRecord();
+    sr.billId = billId;
+    sr.total = total;
+    sr.date = new Date().toString();
+    sales.add(sr);
+
+    saveSales();
+
+    System.out.println("\nBill Generated Successfully!");
+    System.out.println("Saved as: " + billId + ".txt");
+}
 
     // ------------------------------------------------------
     static void saveBillToFile(String billId, String content) {
@@ -412,5 +413,6 @@ public class Grocery {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
