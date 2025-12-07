@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Grocery {
 
-    // ------------------ Data Structures ------------------
+    //  Data Structures 
     static class Product {
         int id;
         String name;
@@ -32,7 +32,7 @@ public class Grocery {
     static final String CASHIER_USER = "Cashier";
     static int CASHIER_PASS = 1111;
 
-    // ------------------------------------------------------
+
     public static void main(String[] args) {
 
         // Load saved data
@@ -49,17 +49,15 @@ public class Grocery {
             choice = safeInt();
 
             switch (choice) {
-                case 1 -> adminLogin();
-                case 2 -> cashierLogin();
-                case 3 -> System.out.println("Exiting system. Goodbye!");
-                default -> System.out.println("Invalid choice!");
+                case 1 : adminLogin();
+                case 2 : cashierLogin();
+                case 3 : System.out.println("Exiting system. Goodbye!");
+                default : System.out.println("Invalid choice!");
             }
 
         } while (choice != 3);
     }
-    // ------------------------------------------------------
-    // ADMIN LOGIN
-    // ------------------------------------------------------
+
     static void adminLogin() {
 
         System.out.println("\n===== ADMIN LOGIN =====");
@@ -69,7 +67,7 @@ public class Grocery {
 
         switch (choice) {
 
-            case 1 -> {
+            case 1 : {
                 System.out.print("Enter Admin Username: ");
                 String user = sc.next();
 
@@ -84,7 +82,7 @@ public class Grocery {
                 }
             }
 
-            case 2 -> {
+            case 2 : {
                 System.out.println("\n===== CHANGE ADMIN PASSWORD =====");
                 System.out.print("Enter current PIN: ");
                 int oldPin = safeInt();
@@ -108,13 +106,10 @@ public class Grocery {
                 }
             }
 
-            default -> System.out.println("Invalid choice!");
+            default : System.out.println("Invalid choice!");
         }
     }
 
-    // ------------------------------------------------------
-    // ADMIN MENU
-    // ------------------------------------------------------
     static void adminMenu() {
 
         int choice;
@@ -134,22 +129,19 @@ public class Grocery {
             sc.nextLine();
 
             switch (choice) {
-                case 1 -> addProduct();
-                case 2 -> viewProducts();
-                case 3 -> updateProduct();
-                case 4 -> deleteProduct();
-                case 5 -> viewSalesReport();
-                case 6 -> lowStockAlert();
-                case 7 -> exportData();
-                case 8 -> System.out.println("Returning to main menu...");
-                default -> System.out.println("Invalid choice.");
+                case 1 : addProduct();
+                case 2 : viewProducts();
+                case 3 : updateProduct();
+                case 4 : deleteProduct();
+                case 5 : viewSalesReport();
+                case 6 : lowStockAlert();
+                case 7 : exportData();
+                case 8 : System.out.println("Returning to main menu...");
+                default : System.out.println("Invalid choice.");
             }
         } while (choice != 8);
     }
 
-    // ------------------------------------------------------
-    // CASHIER LOGIN
-    // ------------------------------------------------------
     static void cashierLogin() {
 
         System.out.println("\n===== CASHIER LOGIN =====");
@@ -160,7 +152,7 @@ public class Grocery {
 
         switch (choice) {
 
-            case 1 -> {
+            case 1 : {
                 System.out.print("Enter Cashier Username: ");
                 String user = sc.next();
 
@@ -175,7 +167,7 @@ public class Grocery {
                 }
             }
 
-            case 2 -> {
+            case 2 : {
                 System.out.println("\n===== CHANGE CASHIER PASSWORD =====");
                 System.out.print("Enter current PIN: ");
                 int oldPin = safeInt();
@@ -200,13 +192,10 @@ public class Grocery {
                 }
             }
 
-            default -> System.out.println("Invalid choice!");
+            default : System.out.println("Invalid choice!");
         }
     }
 
-    // ------------------------------------------------------
-    // CASHIER MENU
-    // ------------------------------------------------------
     static void cashierMenu() {
 
         int choice;
@@ -223,18 +212,16 @@ public class Grocery {
             sc.nextLine();
 
             switch (choice) {
-                case 1 -> generateBill();
-                case 2 -> viewProducts();
-                case 3 -> searchProduct();
-                case 4 -> System.out.println("Returning...");
-                default -> System.out.println("Invalid choice.");
+                case 1 : generateBill();
+                case 2 : viewProducts();
+                case 3 : searchProduct();
+                case 4 : System.out.println("Returning...");
+                default : System.out.println("Invalid choice.");
             }
 
         } while (choice != 4);
     }
-    // ------------------------------------------------------
-    // ADD PRODUCT
-    // ------------------------------------------------------
+
     static void addProduct() {
         Product p = new Product();
 
@@ -257,7 +244,6 @@ public class Grocery {
         System.out.println("Product added successfully.");
     }
 
-    // ------------------------------------------------------
     static void viewProducts() {
         System.out.println("\n===== PRODUCT LIST =====");
         System.out.println("ID | Name | Price | Qty | Category");
@@ -268,7 +254,6 @@ public class Grocery {
         }
     }
 
-    // ------------------------------------------------------
     static void updateProduct() {
         System.out.print("Enter Product ID to update: ");
         int id = safeInt();
@@ -298,7 +283,6 @@ public class Grocery {
         System.out.println("Product updated successfully.");
     }
 
-    // ------------------------------------------------------
     static void deleteProduct() {
         System.out.print("Enter Product ID to delete: ");
         int id = safeInt();
@@ -318,9 +302,6 @@ public class Grocery {
         System.out.println("Product deleted.");
     }
 
-    // ------------------------------------------------------
-    // SEARCH PRODUCT
-    // ------------------------------------------------------
     static void searchProduct() {
         System.out.print("Enter product name or ID: ");
         String input = sc.nextLine().toLowerCase();
@@ -335,9 +316,6 @@ public class Grocery {
         System.out.println("Product not found.");
     }
 
-    // ------------------------------------------------------
-    // BILL GENERATION WITH FILE HANDLING
-    // ------------------------------------------------------
 static void generateBill() {
 
     String billId = "BILL" + System.currentTimeMillis();
@@ -405,7 +383,7 @@ static void generateBill() {
     System.out.println("Saved as: " + billId + ".txt");
 }
 
-    // ------------------------------------------------------
+
     static void saveBillToFile(String billId, String content) {
         try (PrintWriter pw = new PrintWriter(billId + ".txt")) {
             pw.println(content);
@@ -413,6 +391,7 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
 
