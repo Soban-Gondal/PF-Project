@@ -318,22 +318,6 @@ public class Grocery {
         System.out.println("Product deleted.");
     }
 
-    // ------------------------------------------------------
-    // SEARCH PRODUCT
-    // ------------------------------------------------------
-    static void searchProduct() {
-        System.out.print("Enter product name or ID: ");
-        String input = sc.nextLine().toLowerCase();
-
-        for (int i = 0; i < productCount; i++) {
-            Product p = products[i];
-            if (String.valueOf(p.id).equals(input) || p.name.toLowerCase().contains(input)) {
-                System.out.println(p.id + " | " + p.name + " | Rs." + p.price + " | Qty: " + p.quantity);
-                return;
-            }
-        }
-        System.out.println("Product not found.");
-    }
 
 
 
