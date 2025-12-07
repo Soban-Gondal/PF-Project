@@ -404,5 +404,13 @@ public class Grocery {
         System.out.println("Saved as: " + billId + ".txt");
     }
 
+    // ------------------------------------------------------
+    static void saveBillToFile(String billId, String content) {
+        try (PrintWriter pw = new PrintWriter(billId + ".txt")) {
+            pw.println(content);
+        } catch (Exception e) {
+            System.out.println("Error saving bill!");
+        }
+    }
 
 
