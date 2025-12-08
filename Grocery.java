@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Grocery {
 
-    //  Data Structures 
+    
     static class Product {
         int id;
         String name;
@@ -391,6 +391,7 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
 
