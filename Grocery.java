@@ -321,7 +321,6 @@ static void generateBill() {
     String billId = "BILL" + System.currentTimeMillis();
     double total = 0;
 
-    // Using simple String instead of StringBuilder
     String billContent = "";
     
     billContent += "===== GROCERY BILL =====\n";
@@ -390,6 +389,7 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
 
