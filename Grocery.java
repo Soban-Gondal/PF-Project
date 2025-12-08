@@ -22,7 +22,7 @@ public class Grocery {
     static Product[] products = new Product[MAX_PRODUCTS];
     static int productCount = 0;
 
-    static List<SaleRecord> sales = new ArrayList<>();
+    static SaleRecord[] sales = new SaleRecord[50];
 
     static Scanner sc = new Scanner(System.in);
 
@@ -389,6 +389,7 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
 
