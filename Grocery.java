@@ -35,7 +35,7 @@ public class Grocery {
 
     public static void main(String[] args) {
 
-        // Load saved data
+
         loadProducts();
         loadSales();
 
@@ -360,17 +360,16 @@ static void generateBill() {
         System.out.println(qty + " x " + p.name + " = Rs." + cost);
     }
 
-    // TAX 5%
+
     double tax = total * 0.05;
     total += tax;
 
     billContent += "\nTax (5%): " + tax + "\n";
     billContent += "Total Amount: Rs. " + total + "\n";
 
-    // Save bill to file
+
     saveBillToFile(billId, billContent);
 
-    // Save sale record
     SaleRecord sr = new SaleRecord();
     sr.billId = billId;
     sr.total = total;
@@ -391,6 +390,7 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
 
