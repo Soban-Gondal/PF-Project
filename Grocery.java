@@ -336,7 +336,7 @@ static void generateBill() {
 
         int idx = findProductIndex(id);
         if (idx == -1) {
-            System.out.println("Product not found.");
+            System.out.println("Product not found!");
             continue;
         }
 
@@ -389,6 +389,7 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
 
