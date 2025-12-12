@@ -318,67 +318,63 @@ public class Grocery {
 
 static void generateBill() {
 
-    String billId = "BILL" + System.currentTimeMillis();
+    String bill = "";
+    String billId = "BILL-" + (saleCount + 1);
+
+    bill += "============================================";
+    bill += "           GROCERY STORE BILL";
+    bill += "============================================";
+    bill += "Bill No: " + billId + "";
+    bill += "Date   : " + new Date().toString() + "";
+    bill += "--------------------------------------------";
+    bill += String.format("%-15s %-10s %-10s %-10s%n", "Item", "Price", "Qty", "Amount");
+    bill += "--------------------------------------------";
+
     double total = 0;
 
-    String billContent = "";
-    
-    billContent += "===== GROCERY BILL =====\n";
-    billContent += "Bill ID: " + billId + "\n";
-    billContent += "Date: " + new Date() + "\n\n";
-    billContent += "Item | Qty | Unit Price | Total\n";
-
-    while (true) {
-        System.out.print("Enter Product ID (0 to finish): ");
-        int id = safeInt();
-
-        if (id == 0) break;
+    while(true){
+        int id = getInt("Enter Product ID (0 to finish): ");
+        if(id == 0) break;
 
         int idx = findProductIndex(id);
-        if (idx == -1) {
-            System.out.println("Product not found!");
+        if(idx == -1){
+            System.out.println("Invalid ID!");
             continue;
         }
 
+        int qty = getInt("Enter Quantity: ");
         Product p = products[idx];
 
-        System.out.print("Enter Quantity: ");
-        int qty = safeInt();
-
-        if (qty > p.quantity) {
+        if(qty > p.quantity){
             System.out.println("Not enough stock!");
             continue;
         }
 
-        double cost = qty * p.price;
-        total += cost;
+        double amount = qty * p.price;
+        total += amount;
         p.quantity -= qty;
 
-        billContent += p.name + " | " + qty + " | " + p.price + " | " + cost + "\n";
-
-        System.out.println(qty + " x " + p.name + " = Rs." + cost);
+        bill += String.format("%-15s %-10.2f %-10d %-10.2f%n", p.name, p.price, qty, amount);
     }
 
+    bill += "--------------------------------------------";
+    bill += String.format("%-15s %-10s %-10s %-10.2f%n", "TOTAL", "", "", total);
+    bill += "============================================";
 
-    double tax = total * 0.05;
-    total += tax;
+    // Save bill
+    saveBillToFile(bill, billId);
+    saveProductsToFile();
 
-    billContent += "\nTax (5%): " + tax + "\n";
-    billContent += "Total Amount: Rs. " + total + "\n";
+    // Save record
+    SaleRecord s = new SaleRecord();
+    s.billId = billId;
+    s.date = new Date().toString();
+    s.total = total;
+    sales[saleCount++] = s;
 
-
-    saveBillToFile(billId, billContent);
-
-    SaleRecord sr = new SaleRecord();
-    sr.billId = billId;
-    sr.total = total;
-    sr.date = new Date().toString();
-    sales.add(sr);
-
-    saveSales();
-
-    System.out.println("\nBill Generated Successfully!");
-    System.out.println("Saved as: " + billId + ".txt");
+    System.out.println(bill);
+    System.out.println("Bill saved as: " + billId + ".txt");
+} 
 }
 
 
@@ -389,6 +385,7 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
 
