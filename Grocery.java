@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Grocery {
 
-    
+    // ------------------ Data Structures ------------------
     static class Product {
         int id;
         String name;
@@ -22,7 +22,7 @@ public class Grocery {
     static Product[] products = new Product[MAX_PRODUCTS];
     static int productCount = 0;
 
-    static SaleRecord[] sales = new SaleRecord[50];
+    static List<SaleRecord> sales = new ArrayList<>();
 
     static Scanner sc = new Scanner(System.in);
 
@@ -32,10 +32,10 @@ public class Grocery {
     static final String CASHIER_USER = "Cashier";
     static int CASHIER_PASS = 1111;
 
-
+    // ------------------------------------------------------
     public static void main(String[] args) {
 
-
+        // Load saved data
         loadProducts();
         loadSales();
 
@@ -49,15 +49,18 @@ public class Grocery {
             choice = safeInt();
 
             switch (choice) {
-                case 1 : adminLogin();
-                case 2 : cashierLogin();
-                case 3 : System.out.println("Exiting system. Goodbye!");
-                default : System.out.println("Invalid choice!");
+                case 1 -> adminLogin();
+                case 2 -> cashierLogin();
+                case 3 -> System.out.println("Exiting system. Goodbye!");
+                default -> System.out.println("Invalid choice!");
             }
 
         } while (choice != 3);
     }
 
+    // ------------------------------------------------------
+    // ADMIN LOGIN
+    // ------------------------------------------------------
     static void adminLogin() {
 
         System.out.println("\n===== ADMIN LOGIN =====");
@@ -67,7 +70,7 @@ public class Grocery {
 
         switch (choice) {
 
-            case 1 : {
+            case 1 -> {
                 System.out.print("Enter Admin Username: ");
                 String user = sc.next();
 
@@ -82,7 +85,7 @@ public class Grocery {
                 }
             }
 
-            case 2 : {
+            case 2 -> {
                 System.out.println("\n===== CHANGE ADMIN PASSWORD =====");
                 System.out.print("Enter current PIN: ");
                 int oldPin = safeInt();
@@ -106,10 +109,13 @@ public class Grocery {
                 }
             }
 
-            default : System.out.println("Invalid choice!");
+            default -> System.out.println("Invalid choice!");
         }
     }
 
+    // ------------------------------------------------------
+    // ADMIN MENU
+    // ------------------------------------------------------
     static void adminMenu() {
 
         int choice;
@@ -129,19 +135,22 @@ public class Grocery {
             sc.nextLine();
 
             switch (choice) {
-                case 1 : addProduct();
-                case 2 : viewProducts();
-                case 3 : updateProduct();
-                case 4 : deleteProduct();
-                case 5 : viewSalesReport();
-                case 6 : lowStockAlert();
-                case 7 : exportData();
-                case 8 : System.out.println("Returning to main menu...");
-                default : System.out.println("Invalid choice.");
+                case 1 -> addProduct();
+                case 2 -> viewProducts();
+                case 3 -> updateProduct();
+                case 4 -> deleteProduct();
+                case 5 -> viewSalesReport();
+                case 6 -> lowStockAlert();
+                case 7 -> exportData();
+                case 8 -> System.out.println("Returning to main menu...");
+                default -> System.out.println("Invalid choice.");
             }
         } while (choice != 8);
     }
 
+    // ------------------------------------------------------
+    // CASHIER LOGIN
+    // ------------------------------------------------------
     static void cashierLogin() {
 
         System.out.println("\n===== CASHIER LOGIN =====");
@@ -152,7 +161,7 @@ public class Grocery {
 
         switch (choice) {
 
-            case 1 : {
+            case 1 -> {
                 System.out.print("Enter Cashier Username: ");
                 String user = sc.next();
 
@@ -167,7 +176,7 @@ public class Grocery {
                 }
             }
 
-            case 2 : {
+            case 2 -> {
                 System.out.println("\n===== CHANGE CASHIER PASSWORD =====");
                 System.out.print("Enter current PIN: ");
                 int oldPin = safeInt();
@@ -192,10 +201,13 @@ public class Grocery {
                 }
             }
 
-            default : System.out.println("Invalid choice!");
+            default -> System.out.println("Invalid choice!");
         }
     }
 
+    // ------------------------------------------------------
+    // CASHIER MENU
+    // ------------------------------------------------------
     static void cashierMenu() {
 
         int choice;
@@ -212,16 +224,19 @@ public class Grocery {
             sc.nextLine();
 
             switch (choice) {
-                case 1 : generateBill();
-                case 2 : viewProducts();
-                case 3 : searchProduct();
-                case 4 : System.out.println("Returning...");
-                default : System.out.println("Invalid choice.");
+                case 1 -> generateBill();
+                case 2 -> viewProducts();
+                case 3 -> searchProduct();
+                case 4 -> System.out.println("Returning...");
+                default -> System.out.println("Invalid choice.");
             }
 
         } while (choice != 4);
     }
 
+    // ------------------------------------------------------
+    // ADD PRODUCT
+    // ------------------------------------------------------
     static void addProduct() {
         Product p = new Product();
 
@@ -244,6 +259,7 @@ public class Grocery {
         System.out.println("Product added successfully.");
     }
 
+    // ------------------------------------------------------
     static void viewProducts() {
         System.out.println("\n===== PRODUCT LIST =====");
         System.out.println("ID | Name | Price | Qty | Category");
@@ -254,6 +270,7 @@ public class Grocery {
         }
     }
 
+    // ------------------------------------------------------
     static void updateProduct() {
         System.out.print("Enter Product ID to update: ");
         int id = safeInt();
@@ -283,6 +300,7 @@ public class Grocery {
         System.out.println("Product updated successfully.");
     }
 
+    // ------------------------------------------------------
     static void deleteProduct() {
         System.out.print("Enter Product ID to delete: ");
         int id = safeInt();
@@ -302,6 +320,9 @@ public class Grocery {
         System.out.println("Product deleted.");
     }
 
+    // ------------------------------------------------------
+    // SEARCH PRODUCT
+    // ------------------------------------------------------
     static void searchProduct() {
         System.out.print("Enter product name or ID: ");
         String input = sc.nextLine().toLowerCase();
@@ -316,68 +337,76 @@ public class Grocery {
         System.out.println("Product not found.");
     }
 
-static void generateBill() {
+    // ------------------------------------------------------
+    // BILL GENERATION WITH FILE HANDLING
+    // ------------------------------------------------------
+    static void generateBill() {
 
-    String bill = "";
-    String billId = "BILL-" + (saleCount + 1);
+        String billId = "BILL" + System.currentTimeMillis();
+        double total = 0;
 
-    bill += "============================================";
-    bill += "           GROCERY STORE BILL";
-    bill += "============================================";
-    bill += "Bill No: " + billId + "";
-    bill += "Date   : " + new Date().toString() + "";
-    bill += "--------------------------------------------";
-    bill += String.format("%-15s %-10s %-10s %-10s%n", "Item", "Price", "Qty", "Amount");
-    bill += "--------------------------------------------";
+        StringBuilder billContent = new StringBuilder();
+        billContent.append("===== GROCERY BILL =====\n");
+        billContent.append("Bill ID: ").append(billId).append("\n");
+        billContent.append("Date: ").append(new Date()).append("\n\n");
+        billContent.append("Item | Qty | Unit Price | Total\n");
 
-    double total = 0;
+        while (true) {
+            System.out.print("Enter Product ID (0 to finish): ");
+            int id = safeInt();
 
-    while(true){
-        int id = getInt("Enter Product ID (0 to finish): ");
-        if(id == 0) break;
+            if (id == 0) break;
 
-        int idx = findProductIndex(id);
-        if(idx == -1){
-            System.out.println("Invalid ID!");
-            continue;
+            int idx = findProductIndex(id);
+            if (idx == -1) {
+                System.out.println("Product not found.");
+                continue;
+            }
+
+            Product p = products[idx];
+
+            System.out.print("Enter Quantity: ");
+            int qty = safeInt();
+
+            if (qty > p.quantity) {
+                System.out.println("Not enough stock!");
+                continue;
+            }
+
+            double cost = qty * p.price;
+            total += cost;
+            p.quantity -= qty;
+
+            billContent.append(p.name).append(" | ").append(qty).append(" | ")
+                    .append(p.price).append(" | ").append(cost).append("\n");
+
+            System.out.println(qty + " x " + p.name + " = Rs." + cost);
         }
 
-        int qty = getInt("Enter Quantity: ");
-        Product p = products[idx];
+        // TAX 5%
+        double tax = total * 0.05;
+        total += tax;
 
-        if(qty > p.quantity){
-            System.out.println("Not enough stock!");
-            continue;
-        }
+        billContent.append("\nTax (5%): ").append(tax).append("\n");
+        billContent.append("Total Amount: Rs. ").append(total).append("\n");
 
-        double amount = qty * p.price;
-        total += amount;
-        p.quantity -= qty;
+        // Save bill to file
+        saveBillToFile(billId, billContent.toString());
 
-        bill += String.format("%-15s %-10.2f %-10d %-10.2f%n", p.name, p.price, qty, amount);
+        // Save record in memory + file
+        SaleRecord sr = new SaleRecord();
+        sr.billId = billId;
+        sr.total = total;
+        sr.date = new Date().toString();
+        sales.add(sr);
+
+        saveSales();
+
+        System.out.println("\nBill Generated Successfully!");
+        System.out.println("Saved as: " + billId + ".txt");
     }
 
-    bill += "--------------------------------------------";
-    bill += String.format("%-15s %-10s %-10s %-10.2f%n", "TOTAL", "", "", total);
-    bill += "============================================";
-
-    // Save bill
-    saveBillToFile(bill, billId);
-    saveProductsToFile();
-
-    // Save record
-    SaleRecord s = new SaleRecord();
-    s.billId = billId;
-    s.date = new Date().toString();
-    s.total = total;
-    sales[saleCount++] = s;
-
-    System.out.println(bill);
-    System.out.println("Bill saved as: " + billId + ".txt");
-} 
-}
-
-
+    // ------------------------------------------------------
     static void saveBillToFile(String billId, String content) {
         try (PrintWriter pw = new PrintWriter(billId + ".txt")) {
             pw.println(content);
@@ -385,6 +414,126 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
+    // ------------------------------------------------------
+    static void viewSalesReport() {
+        System.out.println("\n===== SALES REPORT =====");
+        for (SaleRecord r : sales) {
+            System.out.println(r.billId + " | Rs." + r.total + " | " + r.date);
+        }
+    }
+
+    // ------------------------------------------------------
+    static void lowStockAlert() {
+        System.out.println("\n===== LOW STOCK PRODUCTS (<5) =====");
+        for (int i = 0; i < productCount; i++) {
+            if (products[i].quantity < 5) {
+                System.out.println(products[i].name + " | Qty:" + products[i].quantity);
+            }
+        }
+    }
+
+    // ------------------------------------------------------
+    static void exportData() {
+        saveProducts();
+        saveSales();
+        System.out.println("Data exported successfully.");
+    }
+
+    // ------------------------------------------------------
+    // FILE HANDLING
+    // ------------------------------------------------------
+    static void loadProducts() {
+        try (BufferedReader br = new BufferedReader(new FileReader("products.txt"))) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+
+                String[] arr = line.split(",");
+
+                Product p = new Product();
+                p.id = Integer.parseInt(arr[0]);
+                p.name = arr[1];
+                p.price = Double.parseDouble(arr[2]);
+                p.quantity = Integer.parseInt(arr[3]);
+                p.category = arr[4];
+
+                products[productCount++] = p;
+            }
+        } catch (Exception ignored) {}
+    }
+
+    static void saveProducts() {
+        try (PrintWriter pw = new PrintWriter("products.txt")) {
+            for (int i = 0; i < productCount; i++) {
+                Product p = products[i];
+                pw.println(p.id + "," + p.name + "," + p.price + "," + p.quantity + "," + p.category);
+            }
+        } catch (Exception ignored) {}
+    }
+
+    static void loadSales() {
+        try (BufferedReader br = new BufferedReader(new FileReader("sales.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] arr = line.split(",");
+                SaleRecord sr = new SaleRecord();
+                sr.billId = arr[0];
+                sr.total = Double.parseDouble(arr[1]);
+                sr.date = arr[2];
+                sales.add(sr);
+            }
+        } catch (Exception ignored) {}
+    }
+
+    static void saveSales() {
+        try (PrintWriter pw = new PrintWriter("sales.txt")) {
+            for (SaleRecord r : sales) {
+                pw.println(r.billId + "," + r.total + "," + r.date);
+            }
+        } catch (Exception ignored) {}
+    }
+
+    // ------------------------------------------------------
+    // UTILITY METHODS
+    // ------------------------------------------------------
+    static int safeInt() {
+        while (true) {
+            try {
+                return Integer.parseInt(sc.nextLine().trim());
+            } catch (Exception e) {
+                System.out.print("Invalid number. Try again: ");
+            }
+        }
+    }
+
+    static double safeDouble() {
+        while (true) {
+            try {
+                return Double.parseDouble(sc.nextLine().trim());
+            } catch (Exception e) {
+                System.out.print("Enter valid amount: ");
+            }
+        }
+    }
+
+    static int getUniqueProductId() {
+        while (true) {
+            int id = safeInt();
+            if (findProductIndex(id) == -1)
+                return id;
+
+            System.out.print("ID already exists. Enter unique ID: ");
+        }
+    }
+
+    static int findProductIndex(int id) {
+        for (int i = 0; i < productCount; i++)
+            if (products[i].id == id)
+                return i;
+        return -1;
+    }
+}
 
 
 
