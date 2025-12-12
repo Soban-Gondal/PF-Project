@@ -13,9 +13,9 @@ public class Grocery {
     }
 
     static class SaleRecord {
-        String billId;
-        double total;
-        String date;
+        String billId
+        double total
+        String date
     }
 
     static final int MAX_PRODUCTS = 500;
@@ -385,6 +385,7 @@ static void generateBill() {
             System.out.println("Error saving bill!");
         }
     }
+
 
 
 
