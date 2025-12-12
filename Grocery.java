@@ -3,7 +3,6 @@ import java.util.*;
 
 public class Grocery {
 
-    // ------------------ Data Structures ------------------
     static class Product {
         int id;
         String name;
@@ -32,7 +31,6 @@ public class Grocery {
     static final String CASHIER_USER = "Cashier";
     static int CASHIER_PASS = 1111;
 
-    // ------------------------------------------------------
     public static void main(String[] args) {
 
         // Load saved data
@@ -58,9 +56,6 @@ public class Grocery {
         } while (choice != 3);
     }
 
-    // ------------------------------------------------------
-    // ADMIN LOGIN
-    // ------------------------------------------------------
     static void adminLogin() {
 
         System.out.println("\n===== ADMIN LOGIN =====");
@@ -113,9 +108,6 @@ public class Grocery {
         }
     }
 
-    // ------------------------------------------------------
-    // ADMIN MENU
-    // ------------------------------------------------------
     static void adminMenu() {
 
         int choice;
@@ -148,9 +140,6 @@ public class Grocery {
         } while (choice != 8);
     }
 
-    // ------------------------------------------------------
-    // CASHIER LOGIN
-    // ------------------------------------------------------
     static void cashierLogin() {
 
         System.out.println("\n===== CASHIER LOGIN =====");
@@ -205,9 +194,6 @@ public class Grocery {
         }
     }
 
-    // ------------------------------------------------------
-    // CASHIER MENU
-    // ------------------------------------------------------
     static void cashierMenu() {
 
         int choice;
@@ -234,9 +220,6 @@ public class Grocery {
         } while (choice != 4);
     }
 
-    // ------------------------------------------------------
-    // ADD PRODUCT
-    // ------------------------------------------------------
     static void addProduct() {
         Product p = new Product();
 
@@ -270,7 +253,6 @@ public class Grocery {
         }
     }
 
-    // ------------------------------------------------------
     static void updateProduct() {
         System.out.print("Enter Product ID to update: ");
         int id = safeInt();
@@ -299,8 +281,6 @@ public class Grocery {
 
         System.out.println("Product updated successfully.");
     }
-
-    // ------------------------------------------------------
     static void deleteProduct() {
         System.out.print("Enter Product ID to delete: ");
         int id = safeInt();
@@ -320,9 +300,6 @@ public class Grocery {
         System.out.println("Product deleted.");
     }
 
-    // ------------------------------------------------------
-    // SEARCH PRODUCT
-    // ------------------------------------------------------
     static void searchProduct() {
         System.out.print("Enter product name or ID: ");
         String input = sc.nextLine().toLowerCase();
@@ -337,9 +314,6 @@ public class Grocery {
         System.out.println("Product not found.");
     }
 
-    // ------------------------------------------------------
-    // BILL GENERATION WITH FILE HANDLING
-    // ------------------------------------------------------
     static void generateBill() {
 
         String billId = "BILL" + System.currentTimeMillis();
@@ -415,7 +389,6 @@ public class Grocery {
         }
     }
 
-    // ------------------------------------------------------
     static void viewSalesReport() {
         System.out.println("\n===== SALES REPORT =====");
         for (SaleRecord r : sales) {
@@ -423,7 +396,6 @@ public class Grocery {
         }
     }
 
-    // ------------------------------------------------------
     static void lowStockAlert() {
         System.out.println("\n===== LOW STOCK PRODUCTS (<5) =====");
         for (int i = 0; i < productCount; i++) {
@@ -433,16 +405,12 @@ public class Grocery {
         }
     }
 
-    // ------------------------------------------------------
     static void exportData() {
         saveProducts();
         saveSales();
         System.out.println("Data exported successfully.");
     }
 
-    // ------------------------------------------------------
-    // FILE HANDLING
-    // ------------------------------------------------------
     static void loadProducts() {
         try (BufferedReader br = new BufferedReader(new FileReader("products.txt"))) {
 
@@ -494,9 +462,6 @@ public class Grocery {
         } catch (Exception ignored) {}
     }
 
-    // ------------------------------------------------------
-    // UTILITY METHODS
-    // ------------------------------------------------------
     static int safeInt() {
         while (true) {
             try {
@@ -534,6 +499,7 @@ public class Grocery {
         return -1;
     }
 }
+
 
 
 
