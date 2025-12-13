@@ -385,7 +385,9 @@ static void generateBill() {
     sr.billId = billId;
     sr.total = grandTotal;
     sr.date = date.toString();
-    sales.add(sr);
+
+    sales[saleCount] = sr;
+    saleCount++;
 
     saveSales();
 }
@@ -458,7 +460,9 @@ static void generateBill() {
                 sr.billId = arr[0];
                 sr.total = Double.parseDouble(arr[1]);
                 sr.date = arr[2];
-                sales.add(sr);
+                
+                sales[saleCount] = sr;
+                saleCount++;
             }
         } catch (Exception ignored) {}
     }
@@ -508,6 +512,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
