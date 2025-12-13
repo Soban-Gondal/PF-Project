@@ -21,8 +21,9 @@ public class Grocery {
     static Product[] products = new Product[MAX_PRODUCTS];
     static int productCount = 0;
 
-    static List<SaleRecord> sales = new ArrayList<>();
-
+    static final int MAX_SALES = 500;
+    static SaleRecord[] sales = new SaleRecord[MAX_SALES];
+    static int saleCount = 0
     static Scanner sc = new Scanner(System.in);
 
     static final String ADMIN_USER = "Admin";
@@ -499,6 +500,7 @@ public class Grocery {
         return -1;
     }
 }
+
 
 
 
