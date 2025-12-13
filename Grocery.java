@@ -23,7 +23,7 @@ public class Grocery {
 
     static final int MAX_SALES = 500;
     static SaleRecord[] sales = new SaleRecord[MAX_SALES];
-    static int saleCount = 0
+    static int saleCount = 0;
     static Scanner sc = new Scanner(System.in);
 
     static final String ADMIN_USER = "Admin";
@@ -512,6 +512,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
