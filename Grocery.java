@@ -315,71 +315,80 @@ public class Grocery {
         System.out.println("Product not found.");
     }
 
-    static void generateBill() {
+static void generateBill() {
 
-        String billId = "BILL" + System.currentTimeMillis();
-        double total = 0;
+    String billId = "INV" + (int)(Math.random() * 100000);
+    Date date = new Date();
+    double total = 0;
 
-        StringBuilder billContent = new StringBuilder();
-        billContent.append("===== GROCERY BILL =====\n");
-        billContent.append("Bill ID: ").append(billId).append("\n");
-        billContent.append("Date: ").append(new Date()).append("\n\n");
-        billContent.append("Item | Qty | Unit Price | Total\n");
+    System.out.println("       Grocery Store.     ");
+    System.out.println("--------------------------------------------");
+    System.out.println("Invoice");
+    System.out.println("Inv #   : " + billId);
+    System.out.println("Date    : " + date);
+    System.out.println("Cashier : Rashid");
+    System.out.println("--------------------------------------------");
+    System.out.printf("%-18s %5s %8s%n", "Item", "Qty", "Total");
+    System.out.println("--------------------------------------------");
 
-        while (true) {
-            System.out.print("Enter Product ID (0 to finish): ");
-            int id = safeInt();
+    while (true) {
+        System.out.print("Enter Product ID (0 to finish): ");
+        int id = safeInt();
+        if (id == 0) break;
 
-            if (id == 0) break;
-
-            int idx = findProductIndex(id);
-            if (idx == -1) {
-                System.out.println("Product not found.");
-                continue;
-            }
-
-            Product p = products[idx];
-
-            System.out.print("Enter Quantity: ");
-            int qty = safeInt();
-
-            if (qty > p.quantity) {
-                System.out.println("Not enough stock!");
-                continue;
-            }
-
-            double cost = qty * p.price;
-            total += cost;
-            p.quantity -= qty;
-
-            billContent.append(p.name).append(" | ").append(qty).append(" | ")
-                    .append(p.price).append(" | ").append(cost).append("\n");
-
-            System.out.println(qty + " x " + p.name + " = Rs." + cost);
+        int idx = findProductIndex(id);
+        if (idx == -1) {
+            System.out.println("Product not found!");
+            continue;
         }
 
+        Product p = products[idx];
 
-        double tax = total * 0.05;
-        total += tax;
+        System.out.print("Enter Quantity: ");
+        int qty = safeInt();
 
-        billContent.append("\nTax (5%): ").append(tax).append("\n");
-        billContent.append("Total Amount: Rs. ").append(total).append("\n");
+        if (qty > p.quantity) {
+            System.out.println("Not enough stock!");
+            continue;
+        }
 
+        double cost = qty * p.price;
+        total += cost;
+        p.quantity -= qty;
 
-        saveBillToFile(billId, billContent.toString());
-
-        // Save record in memory + file
-        SaleRecord sr = new SaleRecord();
-        sr.billId = billId;
-        sr.total = total;
-        sr.date = new Date().toString();
-        sales.add(sr);
-
-        saveSales();
-
-        System.out.println("\nBill Generated Successfully!");
-        System.out.println("Saved as: " + billId + ".txt");
+        System.out.printf("%-18s %5d %8.2f%n", p.name, qty, cost);
     }
+
+    System.out.println("--------------------------------------------");
+
+    double tax = total * 0.05;
+    double grandTotal = total + tax;
+
+    System.out.printf("%-25s %8.2f%n", "Sub Total:", total);
+    System.out.printf("%-25s %8.2f%n", "Tax (5%):", tax);
+    System.out.printf("%-25s %8.2f%n", "Total:", grandTotal);
+
+    System.out.println("--------------------------------------------");
+    System.out.println("Cash Paid     : " + grandTotal);
+    System.out.println("Cash Balance  : 0.00");
+    System.out.println("Items         : Completed");
+    System.out.println();
+    System.out.println("      * Thank You! Come Again *");
+    System.out.println("        Terms and conditions apply");
+    System.out.println("--------------------------------------------");
+    System.out.println("* " + billId + " *");
+
+    // Save bill
+    saveBillToFile(billId, "Total: " + grandTotal);
+
+    SaleRecord sr = new SaleRecord();
+    sr.billId = billId;
+    sr.total = grandTotal;
+    sr.date = date.toString();
+    sales.add(sr);
+
+    saveSales();
+}
 
     static void saveBillToFile(String billId, String content) {
         try (PrintWriter pw = new PrintWriter(billId + ".txt")) {
