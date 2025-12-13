@@ -204,7 +204,7 @@ public class Grocery {
             System.out.println("1. Generate Bill");
             System.out.println("2. View Product List");
             System.out.println("3. Search Product");
-            System.out.println("4. Back");
+            System.out.println("4. Back.");
             System.out.print("Choose option: ");
 
             choice = safeInt();
