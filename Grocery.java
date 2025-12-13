@@ -144,8 +144,8 @@ public class Grocery {
     static void cashierLogin() {
 
         System.out.println("\n===== CASHIER LOGIN =====");
-        System.out.println("1. Login");
-        System.out.println("2. Change Password");
+        System.out.println("1. Login. ");
+        System.out.println("2. Change Password. ");
 
         int choice = safeInt();
 
