@@ -34,7 +34,7 @@ public class Grocery {
 
     public static void main(String[] args) {
 
-        // Load saved data
+    
         loadProducts();
         loadSales();
 
@@ -48,10 +48,10 @@ public class Grocery {
             choice = safeInt();
 
             switch (choice) {
-                case 1 -> adminLogin();
-                case 2 -> cashierLogin();
-                case 3 -> System.out.println("Exiting system. Goodbye!");
-                default -> System.out.println("Invalid choice!");
+                case 1 : adminLogin();
+                case 2 : cashierLogin();
+                case 3 : System.out.println("Exiting system. Goodbye!");
+                default : System.out.println("Invalid choice!");
             }
 
         } while (choice != 3);
@@ -66,7 +66,7 @@ public class Grocery {
 
         switch (choice) {
 
-            case 1 -> {
+            case 1 : {
                 System.out.print("Enter Admin Username: ");
                 String user = sc.next();
 
@@ -81,7 +81,7 @@ public class Grocery {
                 }
             }
 
-            case 2 -> {
+            case 2 : {
                 System.out.println("\n===== CHANGE ADMIN PASSWORD =====");
                 System.out.print("Enter current PIN: ");
                 int oldPin = safeInt();
@@ -105,7 +105,7 @@ public class Grocery {
                 }
             }
 
-            default -> System.out.println("Invalid choice!");
+            default : System.out.println("Invalid choice!");
         }
     }
 
@@ -128,15 +128,15 @@ public class Grocery {
             sc.nextLine();
 
             switch (choice) {
-                case 1 -> addProduct();
-                case 2 -> viewProducts();
-                case 3 -> updateProduct();
-                case 4 -> deleteProduct();
-                case 5 -> viewSalesReport();
-                case 6 -> lowStockAlert();
-                case 7 -> exportData();
-                case 8 -> System.out.println("Returning to main menu...");
-                default -> System.out.println("Invalid choice.");
+                case 1 : addProduct();
+                case 2 : viewProducts();
+                case 3 :updateProduct();
+                case 4 : deleteProduct();
+                case 5 : viewSalesReport();
+                case 6 : lowStockAlert();
+                case 7 : exportData();
+                case 8 : System.out.println("Returning to main menu...");
+                default : System.out.println("Invalid choice.");
             }
         } while (choice != 8);
     }
@@ -151,7 +151,7 @@ public class Grocery {
 
         switch (choice) {
 
-            case 1 -> {
+            case 1 : {
                 System.out.print("Enter Cashier Username: ");
                 String user = sc.next();
 
@@ -166,7 +166,7 @@ public class Grocery {
                 }
             }
 
-            case 2 -> {
+            case 2 : {
                 System.out.println("\n===== CHANGE CASHIER PASSWORD =====");
                 System.out.print("Enter current PIN: ");
                 int oldPin = safeInt();
@@ -191,7 +191,7 @@ public class Grocery {
                 }
             }
 
-            default -> System.out.println("Invalid choice!");
+            default : System.out.println("Invalid choice!");
         }
     }
 
@@ -211,11 +211,11 @@ public class Grocery {
             sc.nextLine();
 
             switch (choice) {
-                case 1 -> generateBill();
-                case 2 -> viewProducts();
-                case 3 -> searchProduct();
-                case 4 -> System.out.println("Returning...");
-                default -> System.out.println("Invalid choice.");
+                case 1 : generateBill();
+                case 2 : viewProducts();
+                case 3 : searchProduct();
+                case 4 : System.out.println("Returning...");
+                default : System.out.println("Invalid choice.");
             }
 
         } while (choice != 4);
@@ -243,7 +243,7 @@ public class Grocery {
         System.out.println("Product added successfully.");
     }
 
-    // ------------------------------------------------------
+
     static void viewProducts() {
         System.out.println("\n===== PRODUCT LIST =====");
         System.out.println("ID | Name | Price | Qty | Category");
@@ -358,14 +358,14 @@ public class Grocery {
             System.out.println(qty + " x " + p.name + " = Rs." + cost);
         }
 
-        // TAX 5%
+
         double tax = total * 0.05;
         total += tax;
 
         billContent.append("\nTax (5%): ").append(tax).append("\n");
         billContent.append("Total Amount: Rs. ").append(total).append("\n");
 
-        // Save bill to file
+
         saveBillToFile(billId, billContent.toString());
 
         // Save record in memory + file
@@ -381,7 +381,6 @@ public class Grocery {
         System.out.println("Saved as: " + billId + ".txt");
     }
 
-    // ------------------------------------------------------
     static void saveBillToFile(String billId, String content) {
         try (PrintWriter pw = new PrintWriter(billId + ".txt")) {
             pw.println(content);
