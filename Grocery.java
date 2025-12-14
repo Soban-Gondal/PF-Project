@@ -395,87 +395,6 @@ public class Grocery{
         System.out.println("Product not found.");
     }
 
-static void generateBill() {
-
-    String billId = "INV" + (int)(Math.random() * 100000);
-    Date date = new Date();
-    double total = 0;
-
-    String bill = "";
-
-    bill += "       Grocery Store.\n";
-    bill += "--------------------------------------------\n";
-    bill += "Invoice\n";
-    bill += "Inv #   : " + billId + "\n";
-    bill += "Date    : " + date + "\n";
-    bill += "Cashier : Rashid\n";
-    bill += "--------------------------------------------\n";
-    bill += String.format("%-18s %5s %8s%n", "Item", "Qty", "Total");
-    bill += "--------------------------------------------\n";
-
-    System.out.print(bill);
-
-    while (true) {
-        System.out.print("Enter Product ID (0 to finish): ");
-        int id = safeInt();
-        if (id == 0) break;
-
-        int idx = findProductIndex(id);
-        if (idx == -1) {
-            System.out.println("Product not found!");
-            continue;
-        }
-
-        Product p = products[idx];
-
-        System.out.print("Enter Quantity: ");
-        int qty = safeInt();
-
-        if (qty > p.quantity) {
-            System.out.println("Not enough stock!");
-            continue;
-        }
-
-        double cost = qty * p.price;
-        total += cost;
-        p.quantity -= qty;
-
-        String line = String.format("%-18s %5d %8.2f%n", p.name, qty, cost);
-        System.out.print(line);
-        bill += line;
-    }
-
-    bill += "--------------------------------------------\n";
-
-    double tax = total * 0.05;
-    double grandTotal = total + tax;
-
-    bill += String.format("%-25s %8.2f%n", "Sub Total:", total);
-    bill += String.format("%-25s %8.2f%n", "Tax (5%):", tax);
-    bill += String.format("%-25s %8.2f%n", "Total:", grandTotal);
-
-    bill += "--------------------------------------------\n";
-    bill += "Cash Paid     : " + grandTotal + "\n";
-    bill += "Cash Balance  : 0.00\n";
-    bill += "Items         : Completed\n\n";
-    bill += "      * Thank You! Come Again *\n";
-    bill += "        Terms and conditions apply\n";
-    bill += "--------------------------------------------\n";
-    bill += "* " + billId + " *\n";
-
-    System.out.print(bill);
-
-    // Save full bill
-    saveBillToFile(billId, bill);
-
-    SaleRecord sr = new SaleRecord();
-    sr.billId = billId;
-    sr.total = grandTotal;
-    sr.date = date.toString();
-
-    sales[saleCount++] = sr;
-    saveSales();
-}
     static void generateBill() {
 
     String billId = "INV" + (int)(Math.random() * 100000);
@@ -791,6 +710,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
