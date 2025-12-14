@@ -1,4 +1,4 @@
-import java.io.*;
+#import java.io.*;
 import java.util.*;
 
 public class Grocery {
@@ -510,7 +510,7 @@ static void generateBill() {
         } catch (NumberFormatException e) {
             System.out.print("Invalid amount. Enter again: ");
         } catch (Exception e) {
-            System.out.println("\nInput interrupted. Returning to menu.");
+            System.out.println("\nInput interrupted. Returning to Menu.");
             return 0;
         }
       }
