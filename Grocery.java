@@ -587,7 +587,7 @@ static void generateBill() {
         saveSales();
         System.out.println("Data exported successfully.");
     }
-
+    
     static void loadProducts() {
         try (BufferedReader br = new BufferedReader(new FileReader("products.txt"))) {
 
@@ -596,49 +596,132 @@ static void generateBill() {
 
                 String[] arr = line.split(",");
 
-                Product p = new Product();
-                p.id = Integer.parseInt(arr[0]);
-                p.name = arr[1];
-                p.price = Double.parseDouble(arr[2]);
-                p.quantity = Integer.parseInt(arr[3]);
-                p.category = arr[4];
+                if (arr.length != 5) {
+                    System.out.println("Invalid product format: " + line);
+                    continue;
+                }
 
-                products[productCount++] = p;
+                Product p = new Product();
+                p.id = Integer.parseInt(arr[0].trim());
+                p.name = arr[1].trim();
+                p.price = Double.parseDouble(arr[2].trim());
+                p.quantity = Integer.parseInt(arr[3].trim());
+                p.category = arr[4].trim();
+
+                if (productCount < products.length) {
+                    products[productCount++] = p;
+                } else {
+                    System.out.println("Product limit reached. Cannot load more products.");
+                    break;
+                }
             }
-        } catch (Exception ignored) {}
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: products.txt file not found.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Invalid number format in products file.");
+        } catch (IOException e) {
+            System.out.println("Error reading products file.");
+        } catch (Exception e) {  // main / generic exception
+            System.out.println("Unexpected error while loading products.");
+        }
     }
 
     static void saveProducts() {
-        try (PrintWriter pw = new PrintWriter("products.txt")) {
+
+        if (productCount == 0) {
+            System.out.println("No products to save.");
+            return;
+        }
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter("products.txt"))) {
+
             for (int i = 0; i < productCount; i++) {
                 Product p = products[i];
-                pw.println(p.id + "," + p.name + "," + p.price + "," + p.quantity + "," + p.category);
-            }
-        } catch (Exception ignored) {}
-    }
 
-    static void loadSales() {
+                if (p == null) {
+                    continue;
+                }
+
+                pw.println(
+                    p.id + "," +
+                    p.name + "," +
+                    p.price + "," +
+                    p.quantity + "," +
+                    p.category
+                );
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Unable to create or access products.txt.");
+        } catch (IOException e) {
+            System.out.println("Error: Failed while writing product data.");
+        } catch (Exception e) {   // main / generic exception
+            System.out.println("Unexpected error while saving products.");
+        }
+    }
+   static void loadSales() {
         try (BufferedReader br = new BufferedReader(new FileReader("sales.txt"))) {
+
             String line;
             while ((line = br.readLine()) != null) {
+
                 String[] arr = line.split(",");
+
+                if (arr.length != 3) {
+                    System.out.println("Invalid sale record format: " + line);
+                    continue;
+                }
+
+                if (saleCount >= sales.length) {
+                    System.out.println("Sales limit reached. Cannot load more records.");
+                    break;
+                }
+
                 SaleRecord sr = new SaleRecord();
-                sr.billId = arr[0];
-                sr.total = Double.parseDouble(arr[1]);
-                sr.date = arr[2];
-                
-                sales[saleCount] = sr;
-                saleCount++;
+                sr.billId = arr[0].trim();
+                sr.total = Double.parseDouble(arr[1].trim());
+                sr.date = arr[2].trim();
+
+                sales[saleCount++] = sr;
             }
-        } catch (Exception ignored) {}
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: sales.txt file not found.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Invalid total amount in sales file.");
+        } catch (IOException e) {
+            System.out.println("Error: Problem reading sales file.");
+        } catch (Exception e) {   // main / generic exception
+            System.out.println("Unexpected error while loading sales data.");
+        }
     }
 
-    static void saveSales() {
-        try (PrintWriter pw = new PrintWriter("sales.txt")) {
-            for (SaleRecord r : sales) {
+   static void saveSales() {
+
+        if (saleCount == 0) {
+            System.out.println("No sales to save.");
+            return;
+        }
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter("sales.txt"))) {
+
+            for (int i = 0; i < saleCount; i++) {
+                SaleRecord r = sales[i];
+                if (r == null) continue;
+
                 pw.println(r.billId + "," + r.total + "," + r.date);
             }
-        } catch (Exception ignored) {}
+
+            System.out.println("Sales data saved successfully.");
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Unable to create or access sales.txt.");
+        } catch (IOException e) {
+            System.out.println("Error: Problem writing sales data.");
+        } catch (Exception e) {  // main / generic exception
+            System.out.println("Unexpected error while saving sales.");
+        }
     }
 
     static int safeInt() {
@@ -708,6 +791,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
