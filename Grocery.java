@@ -476,34 +476,58 @@ static void generateBill() {
     }
 
     static int safeInt() {
-        while (true) {
-            try {
-                return Integer.parseInt(sc.nextLine().trim());
-            } catch (Exception e) {
-                System.out.print("Invalid number. Try again: ");
-            }
-        }
-    }
+    while (true) {
+        try {
+            String input = sc.nextLine();
 
+            if (input == null || input.trim().isEmpty()) {
+                System.out.print("Input cannot be empty. Try again: ");
+                continue;
+            }
+
+            return Integer.parseInt(input.trim());
+
+        } catch (NumberFormatException e) {
+            System.out.print("Invalid number. Enter again: ");
+        } catch (Exception e) {
+            System.out.println("\nInput interrupted. Returning to menu.");
+            return -1;
+        }
+      }
+    }
     static double safeDouble() {
-        while (true) {
-            try {
-                return Double.parseDouble(sc.nextLine().trim());
-            } catch (Exception e) {
-                System.out.print("Enter valid amount: ");
+    while (true) {
+        try {
+            String input = sc.nextLine();
+
+            if (input == null || input.trim().isEmpty()) {
+                System.out.print("Input cannot be empty. Try again: ");
+                continue;
             }
-        }
-    }
 
-    static int getUniqueProductId() {
-        while (true) {
-            int id = safeInt();
-            if (findProductIndex(id) == -1)
-                return id;
+            return Double.parseDouble(input.trim());
 
-            System.out.print("ID already exists. Enter unique ID: ");
+        } catch (NumberFormatException e) {
+            System.out.print("Invalid amount. Enter again: ");
+        } catch (Exception e) {
+            System.out.println("\nInput interrupted. Returning to menu.");
+            return 0;
         }
+      }
+  }
+
+ static int getUniqueProductId() {
+    while (true) {
+        int id = safeInt();
+
+        if (id == -1) return -1;
+
+        if (findProductIndex(id) == -1)
+            return id;
+
+        System.out.print("ID already exists. Enter unique ID: ");
     }
+}
 
     static int findProductIndex(int id) {
         for (int i = 0; i < productCount; i++)
@@ -512,6 +536,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
