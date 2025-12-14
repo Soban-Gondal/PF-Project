@@ -608,25 +608,3 @@ static void generateBill() {
         return -1;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
