@@ -130,6 +130,7 @@ public class Grocery{
                     System.out.println("Invalid admin details!");
                 }
             }
+                break;
 
             case 2 : {
                 System.out.println("\n===== CHANGE ADMIN PASSWORD =====");
@@ -155,8 +156,10 @@ public class Grocery{
                     System.out.println("Incorrect current PIN!");
                 }
             }
+                break;
 
             default : System.out.println("Invalid choice!");
+                break;
         }
     }
 
@@ -180,14 +183,23 @@ public class Grocery{
 
             switch (choice) {
                 case 1 : addProduct();
+                    break;
                 case 2 : viewProducts();
+                    break;
                 case 3 :updateProduct();
+                    break;
                 case 4 : deleteProduct();
+                    break;
                 case 5 : viewSalesReport();
+                    break;
                 case 6 : lowStockAlert();
+                    break;
                 case 7 : exportData();
+                    break;
                 case 8 : System.out.println("Returning to main menu...");
+                    break;
                 default : System.out.println("Invalid choice.");
+                    break;
             }
         } while (choice != 8);
     }
@@ -216,6 +228,7 @@ public class Grocery{
                     System.out.println("Invalid cashier details!");
                 }
             }
+                break;
 
             case 2 : {
                 System.out.println("\n===== CHANGE CASHIER PASSWORD =====");
@@ -242,8 +255,10 @@ public class Grocery{
                     System.out.println("Incorrect current PIN!");
                 }
             }
+                break;
 
             default : System.out.println("Invalid choice!");
+                break;
         }
     }
 
@@ -264,10 +279,15 @@ public class Grocery{
 
             switch (choice) {
                 case 1 : generateBill();
+                    break;
                 case 2 : viewProducts();
+                    break;
                 case 3 : searchProduct();
+                    break;
                 case 4 : System.out.println("Returning...");
+                    break;
                 default : System.out.println("Invalid choice.");
+                    break;
             }
 
         } while (choice != 4);
@@ -588,6 +608,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
