@@ -75,8 +75,10 @@ public class Grocery{
             String[] data = br.readLine().split(",");
             adminUser = data[0];
             adminPass = Integer.parseInt(data[1]);
+        } catch (IOException e) {
+        System.out.println("Admin file missing! Try Again");
         } catch (Exception e) {
-        System.out.println("Admin file missing!");
+        System.out.println("Error! Try Again");
         }
     }
 
@@ -85,24 +87,30 @@ public class Grocery{
             String[] data = br.readLine().split(",");
             cashierUser = data[0];
             cashierPass = Integer.parseInt(data[1]);
+        } catch (IOException e) {
+            System.out.println("Cashier file missing! Try Again");
         } catch (Exception e) {
-            System.out.println("Cashier file missing!");
+        System.out.println("Error! Try Again");
         }
     }
 
     static void saveAdmin() {
         try (PrintWriter pw = new PrintWriter("admin.txt")) {
             pw.println(adminUser + "," + adminPass);
+        } catch (IOException e) {
+            System.out.println("Error saving admin file! Try Again");
         } catch (Exception e) {
-            System.out.println("Error saving admin file!");
+        System.out.println("Error! Try Again");
         }
     }
 
     static void saveCashier() {
         try (PrintWriter pw = new PrintWriter("cashier.txt")) {
             pw.println(cashierUser + "," + cashierPass);
+        } catch (IOException e) {
+            System.out.println("Error saving cashier file! Try Again");
         } catch (Exception e) {
-            System.out.println("Error saving cashier file!");
+        System.out.println("Error! Try Again");
         }
     }
 
@@ -467,9 +475,11 @@ static void generateBill() {
     static void saveBillToFile(String billId, String content) {
         try (PrintWriter pw = new PrintWriter(billId + ".txt")) {
             pw.println(content);
+        } catch (IOException e) {
+            System.out.println("Error saving bill! Try Again");
         } catch (Exception e) {
-            System.out.println("Error saving bill!");
-        }
+            System.out.println("Error! Try Again");
+        } 
     }
 
     static void viewSalesReport() {
@@ -608,3 +618,4 @@ static void generateBill() {
         return -1;
     }
 }
+
