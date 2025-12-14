@@ -655,6 +655,9 @@ static void generateBill() {
 
         } catch (NumberFormatException e) {
             System.out.print("Invalid number. Enter again: ");
+        } catch (InputMismatchException e) {
+            System.out.print("Invalid input. Enter a number: ");
+            sc.next();
         } catch (Exception e) {
             System.out.println("\nInput interrupted. Returning to menu.");
             return -1;
@@ -675,6 +678,9 @@ static void generateBill() {
 
         } catch (NumberFormatException e) {
             System.out.print("Invalid amount. Enter again: ");
+        } catch (InputMismatchException e) {
+            System.out.print("Invalid input. Enter a number: ");
+            sc.next();
         } catch (Exception e) {
             System.out.println("\nInput interrupted. Returning to Menu.");
             return 0;
@@ -702,5 +708,6 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
