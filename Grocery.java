@@ -660,7 +660,11 @@ public class Grocery{
         } catch (InputMismatchException e) {
             System.out.print("Invalid input. Enter a number: ");
             sc.next();
-        } catch (Exception e) {
+        } catch(NoSuchElementException e){
+            //This catch block will handles Ctrl+Z/Ctrl+D (EOF)
+            System.out.println("\nExiting the program gracefully.");
+            System.exit(0);
+        }catch (Exception e) {
             System.out.println("\nInput interrupted. Returning to menu.");
             return -1;
         }
@@ -683,6 +687,10 @@ public class Grocery{
         } catch (InputMismatchException e) {
             System.out.print("Invalid input. Enter a number: ");
             sc.next();
+        } catch(NoSuchElementException e){
+            //This catch block will handles Ctrl+Z/Ctrl+D (EOF)
+            System.out.println("\nExiting the program gracefully.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("\nInput interrupted. Returning to Menu.");
             return 0;
@@ -710,6 +718,7 @@ public class Grocery{
         return -1;
     }
 }
+
 
 
 
