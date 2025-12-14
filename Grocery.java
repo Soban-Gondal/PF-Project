@@ -1,7 +1,7 @@
-#import java.io.*;
+import java.io.*;
 import java.util.*;
 
-public class Grocery {
+public class Grocery1{
 
     static class Product {
         int id;
@@ -26,15 +26,16 @@ public class Grocery {
     static int saleCount = 0;
     static Scanner sc = new Scanner(System.in);
 
-    static final String ADMIN_USER = "Admin";
-    static int ADMIN_PASS = 1234;
+    static String adminUser;
+    static int adminPass;
 
-    static final String CASHIER_USER = "Cashier";
-    static int CASHIER_PASS = 1111;
+    static String cashierUser;
+    static int cashierPass;
 
     public static void main(String[] args) {
 
-    
+        loadAdmin();
+        loadCashier();
         loadProducts();
         loadSales();
 
@@ -57,6 +58,43 @@ public class Grocery {
         } while (choice != 3);
     }
 
+    static void loadAdmin() {
+        try (BufferedReader br = new BufferedReader(new FileReader("admin.txt"))) {
+            String[] data = br.readLine().split(",");
+            adminUser = data[0];
+            adminPass = Integer.parseInt(data[1]);
+        } catch (Exception e) {
+        System.out.println("Admin file missing!");
+        }
+    }
+
+    static void loadCashier() {
+        try (BufferedReader br = new BufferedReader(new FileReader("cashier.txt"))) {
+            String[] data = br.readLine().split(",");
+            cashierUser = data[0];
+            cashierPass = Integer.parseInt(data[1]);
+        } catch (Exception e) {
+            System.out.println("Cashier file missing!");
+        }
+    }
+
+    static void saveAdmin() {
+        try (PrintWriter pw = new PrintWriter("admin.txt")) {
+            pw.println(adminUser + "," + adminPass);
+        } catch (Exception e) {
+            System.out.println("Error saving admin file!");
+        }
+    }
+
+    static void saveCashier() {
+        try (PrintWriter pw = new PrintWriter("cashier.txt")) {
+            pw.println(cashierUser + "," + cashierPass);
+        } catch (Exception e) {
+            System.out.println("Error saving cashier file!");
+        }
+    }
+
+
     static void adminLogin() {
 
         System.out.println("\n===== ADMIN LOGIN =====");
@@ -73,7 +111,7 @@ public class Grocery {
                 System.out.print("Enter 4-digit PIN: ");
                 int pass = safeInt();
 
-                if (user.equals(ADMIN_USER) && pass == ADMIN_PASS) {
+                if (user.equals(adminUser) && pass == adminPass) {
                     sc.nextLine();
                     adminMenu();
                 } else {
@@ -86,7 +124,7 @@ public class Grocery {
                 System.out.print("Enter current PIN: ");
                 int oldPin = safeInt();
 
-                if (oldPin == ADMIN_PASS) {
+                if (oldPin == adminPass) {
 
                     System.out.print("Enter new PIN: ");
                     int newPin = safeInt();
@@ -95,7 +133,8 @@ public class Grocery {
                     int confirmPin = safeInt();
 
                     if (newPin == confirmPin) {
-                        ADMIN_PASS = newPin;
+                        adminPass = newPin;
+                        saveAdmin();
                         System.out.println("Password changed successfully!");
                     } else {
                         System.out.println("New PINs do not match!");
@@ -158,7 +197,7 @@ public class Grocery {
                 System.out.print("Enter 4-digit PIN: ");
                 int pass = safeInt();
 
-                if (user.equals(CASHIER_USER) && pass == CASHIER_PASS) {
+                if (user.equals(cashierUser) && pass == cashierPass) {
                     sc.nextLine();
                     cashierMenu();
                 } else {
@@ -171,7 +210,7 @@ public class Grocery {
                 System.out.print("Enter current PIN: ");
                 int oldPin = safeInt();
 
-                if (oldPin == CASHIER_PASS) {
+                if (oldPin == cashierPass) {
 
                     System.out.print("Enter new PIN: ");
                     int newPin = safeInt();
@@ -180,7 +219,8 @@ public class Grocery {
                     int confirmPin = safeInt();
 
                     if (newPin == confirmPin) {
-                        CASHIER_PASS = newPin;
+                        cashierPass = newPin;
+                        saveCashier();
                         System.out.println("Password changed successfully!");
                     } else {
                         System.out.println("PINs do not match!");
