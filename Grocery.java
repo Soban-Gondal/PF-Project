@@ -38,26 +38,38 @@ public class Grocery{
         loadCashier();
         loadProducts();
         loadSales();
-
+        
+        mainMenu();
+    }
+    static void mainMenu() {
         int choice;
+
         do {
             System.out.println("\n===== GROCERY STORE SYSTEM =====");
             System.out.println("1. Admin Login");
             System.out.println("2. Cashier Login");
             System.out.println("3. Exit");
             System.out.print("Enter your choice: ");
+
             choice = safeInt();
 
             switch (choice) {
-                case 1 : adminLogin();
-                case 2 : cashierLogin();
-                case 3 : System.out.println("Exiting system. Goodbye!");
-                default : System.out.println("Invalid choice!");
+                case 1:
+                    adminLogin();
+                    break;
+                case 2:
+                    cashierLogin();
+                    break;
+                case 3:
+                    System.out.println("Exiting system. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+                    break;
             }
 
         } while (choice != 3);
     }
-
     static void loadAdmin() {
         try (BufferedReader br = new BufferedReader(new FileReader("admin.txt"))) {
             String[] data = br.readLine().split(",");
@@ -576,6 +588,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
