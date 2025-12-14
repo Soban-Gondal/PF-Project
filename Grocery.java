@@ -485,12 +485,25 @@ public class Grocery{
 }
 
 
-    static void viewSalesReport() {
-        System.out.println("\n===== SALES REPORT =====");
-        for (SaleRecord r : sales) {
-            System.out.println(r.billId + " | Rs." + r.total + " | " + r.date);
-        }
+   static void viewSalesReport() {
+    System.out.println("\n===== SALES REPORT =====");
+
+    if (saleCount == 0) {
+        System.out.println("No sales recorded.");
+        return;
     }
+
+    for (int i = 0; i < saleCount; i++) {
+
+        SaleRecord r = sales[i];
+
+        if (r == null) continue; // extra safety
+
+        System.out.println(
+            r.billId + " | Rs." + String.format("%.2f", r.total) + " | " + r.date
+        );
+    }
+}
 
     static void lowStockAlert() {
         System.out.println("\n===== LOW STOCK PRODUCTS (<5) =====");
@@ -718,6 +731,7 @@ public class Grocery{
         return -1;
     }
 }
+
 
 
 
