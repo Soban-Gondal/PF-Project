@@ -216,7 +216,7 @@ public class Grocery{
 
             case 1 : {
                 System.out.print("Enter Cashier Username: ");
-                String user = sc.next();
+                String user = sc.nextLine();
 
                 System.out.print("Enter 4-digit PIN: ");
                 int pass = safeInt();
@@ -608,6 +608,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
