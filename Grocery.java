@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Grocery1{
+public class Grocery{
 
     static class Product {
         int id;
@@ -576,6 +576,7 @@ static void generateBill() {
         return -1;
     }
 }
+
 
 
 
