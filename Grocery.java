@@ -173,17 +173,54 @@ public class Grocery{
 
     static void adminMenu() {
 
+    int choice;
+
+    do {
+        System.out.println("\n===== ADMIN MENU =====");
+        System.out.println("1. Inventory");
+        System.out.println("2. View Sales Report");
+        System.out.println("3. Export Data");
+        System.out.println("4. Logout");
+        System.out.print("Enter choice: ");
+
+        choice = safeInt();
+
+        switch (choice) {
+
+            case 1:
+                inventory();
+                break;
+
+            case 2:
+                viewSalesReport();
+                break;
+
+            case 3:
+                exportData();
+                break;
+
+            case 4:
+                System.out.println("Logging out...");
+                break;
+
+            default:
+                System.out.println("Invalid choice. Try again.");
+        }
+
+    } while (choice != 4);
+}
+
+    static void inventory() {
+
         int choice;
         do {
-            System.out.println("\n===== ADMIN MENU =====");
+            System.out.println("\n===== Inventory =====");
             System.out.println("1. Add Product");
             System.out.println("2. View All Products");
             System.out.println("3. Update Product");
             System.out.println("4. Delete Product");
-            System.out.println("5. View Sales Report");
-            System.out.println("6. Low Stock Alert");
-            System.out.println("7. Export Data");
-            System.out.println("8. Back to Main Menu");
+            System.out.println("5. Low Stock Alert");
+            System.out.println("6. Back to Main Menu");
             System.out.print("Choose option: ");
 
             choice = safeInt();
@@ -198,13 +235,10 @@ public class Grocery{
                     break;
                 case 4 : deleteProduct();
                     break;
-                case 5 : viewSalesReport();
+                case 5 : lowStockAlert();
                     break;
-                case 6 : lowStockAlert();
-                    break;
-                case 7 : exportData();
-                    break;
-                case 8 : System.out.println("Returning to main menu...");
+                case 6 : System.out.println("Returning to main menu...");
+                    adminMenu();
                     break;
                 default : System.out.println("Invalid choice.");
                     break;
